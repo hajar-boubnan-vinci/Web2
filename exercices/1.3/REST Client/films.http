@@ -1,0 +1,22 @@
+### Read all films with File variable
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/films
+
+### Read all films with minimum duration
+GET {{baseUrl}}/films?minimum-duration=90
+
+### Read a single film
+GET {{baseUrl}}/films/1
+
+### Create a film
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+    "title": "Inception",
+    "director": "Christopher Nolan",
+    "duration": 148,
+    "budget": 160,
+    "description": "A mind-bending thriller",
+    "imageUrl": "https://example.com/inception.jpg"
+}
