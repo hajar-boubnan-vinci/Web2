@@ -13,11 +13,12 @@ GET {{baseUrl}}/films/1
 POST {{baseUrl}}/films
 Content-Type: application/json
 
+
 {
-    "title": "Inception",
-    "director": "Christopher Nolan",
-    "duration": 148,
-    "budget": 160,
-    "description": "A mind-bending thriller",
-    "imageUrl": "https://example.com/inception.jpg"
+    "title": "New Film Title",
+    "director": "New Directore",
+    "duration": 120,
+    "budget": 100,
+    "description": "A new film description",
+    "imageUrl": "https://example.com/new-film-image.jpg"
 }

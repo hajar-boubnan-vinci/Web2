@@ -50,6 +50,10 @@ router.get("/", (req, res) => {
 // READ ONE
 router.get("/:id", (req, res) => {
   const id = Number(req.params.id);
+  if (isNaN(id) || id <= 0) {
+    return res.status(400).json({ error: "Invalid ID" });
+  }
+
   const film = films.find(f => f.id === id);
   if (!film) {
     return res.status(404).json({ error: "Film not found" });
@@ -81,6 +85,12 @@ router.post("/", (req, res) => {
   }
   const { title, director, duration, budget, description, imageUrl } = body as NewFilm;
 
+  // Vérifier les doublons
+  const existingFilm = films.find(f => f.title === title && f.director === director);
+  if (existingFilm) {
+    return res.status(409).json({ error: "Film already exists" });
+  }
+
   const nextId = films.reduce((maxId, film) => (film.id > maxId ? film.id : maxId), 0) + 1;
 
   const newFilm: Film = {
@@ -94,7 +104,8 @@ router.post("/", (req, res) => {
   };
 
   films.push(newFilm);
-  return res.json(newFilm);
+  return res.status(201).json(newFilm);
 });
+
 
 export default router;
