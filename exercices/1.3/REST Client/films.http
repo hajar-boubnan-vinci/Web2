@@ -22,3 +22,25 @@ Content-Type: application/json
     "description": "A new film description",
     "imageUrl": "https://example.com/new-film-image.jpg"
 }
+
+### Delete a film
+DELETE {{baseUrl}}/films/1
+
+### Update a film partially
+PATCH {{baseUrl}}/films/2
+Content-Type: application/json
+
+{
+    "title": "New Title"
+}
+
+### Replace or create a film
+PUT {{baseUrl}}/films/3
+Content-Type: application/json
+
+{
+    "title": "New Film",
+    "director": "New Director",
+    "budget": 1000000,
+    "duration": 120
+}

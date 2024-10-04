@@ -33,6 +33,13 @@ const films: Film[] = [
 
 const router = Router();
 
+interface UpdateFilmBody {
+  title?: string;
+  director?: string;
+  budget?: number;
+  duration?: number;
+}
+
 // READ ALL FILTERED
 router.get("/", (req, res) => {
   const minDuration = req.query['minimum-duration'] ? Number(req.query['minimum-duration']) : null;
@@ -107,5 +114,72 @@ router.post("/", (req, res) => {
   return res.status(201).json(newFilm);
 });
 
+// DELETE ONE
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = films.findIndex((film) => film.id === id);
+  if (index === -1) {
+    return res.sendStatus(404);
+  }
+  const deletedFilm = films.splice(index, 1);
+  return res.json(deletedFilm);
+});
+
+// PATCH ONE
+router.patch("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const film = films.find((film) => film.id === id);
+  if (!film) {
+    return res.sendStatus(404);
+  }
+
+  const { title, director, budget, duration } = req.body as UpdateFilmBody;
+
+  if (budget !== undefined && (typeof budget !== "number" || budget <= 0)) {
+    return res.sendStatus(400);
+  }
+  if (duration !== undefined && (typeof duration !== "number" || duration <= 0)) {
+    return res.sendStatus(400);
+  }
+
+  if (title) {
+    film.title = title;
+  }
+  if (director) {
+    film.director = director;
+  }
+  if (budget) {
+    film.budget = budget;
+  }
+  if (duration) {
+    film.duration = duration;
+  }
+
+  return res.json(film);
+});
+
+// PUT ONE
+router.put("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const { title, director, budget, duration } = req.body as UpdateFilmBody;
+
+  if (!title || !director || budget === undefined || duration === undefined) {
+    return res.sendStatus(400);
+  }
+  if (typeof budget !== "number" || budget <= 0 || typeof duration !== "number" || duration <= 0) {
+    return res.sendStatus(400);
+  }
+
+  const filmIndex = films.findIndex((film) => film.id === id);
+  const newFilm = { id, title, director, budget, duration };
+
+  if (filmIndex === -1) {
+    films.push(newFilm);
+    return res.status(201).json(newFilm);
+  } else {
+    films[filmIndex] = newFilm;
+    return res.json(newFilm);
+  }
+});
 
 export default router;
