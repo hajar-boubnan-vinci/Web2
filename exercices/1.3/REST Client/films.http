@@ -5,6 +5,7 @@ GET {{baseUrl}}/films
 ### Read all films with minimum duration
 GET {{baseUrl}}/films?minimum-duration=90
 
+
 ### Read a single film
 GET {{baseUrl}}/films/1
 

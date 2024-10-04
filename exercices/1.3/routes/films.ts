@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Film ,NewFilm} from "../types";
+import { Film, NewFilm } from "../types";
 
 const films: Film[] = [
   {
@@ -32,14 +32,18 @@ const films: Film[] = [
 ];
 
 const router = Router();
-/ READ ALL FILTERED
+
+// READ ALL FILTERED
 router.get("/", (req, res) => {
-  const minDuration = Number(req.query['minimum-duration']);
-  if (isNaN(minDuration) || minDuration <= 0) {
+  const minDuration = req.query['minimum-duration'] ? Number(req.query['minimum-duration']) : null;
+  if (minDuration !== null && (isNaN(minDuration) || minDuration <= 0)) {
     return res.status(400).json({ error: "Wrong minimum duration" });
   }
 
-  const filteredFilms = films.filter(film => film.duration >= minDuration);
+  const filteredFilms = minDuration !== null
+    ? films.filter(film => film.duration >= minDuration)
+    : films;
+
   return res.json(filteredFilms);
 });
 
