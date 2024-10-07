@@ -1,0 +1,82 @@
+######### NORMAL OPERATION  ###########
+
+### Lire toutes les ressources
+GET http://localhost:3000/texts
+
+
+### Lire toutes les ressources avec une variable de fichier
+@baseUrl = http://localhost:3000
+GET {{baseUrl}}/texts
+
+
+### Lire une ressource par ID
+GET {{baseUrl}}/texts/1
+
+
+### Créer une nouvelle ressource
+POST {{baseUrl}}/texts
+Content-Type: application/json
+
+{
+    "content": "This is a new text",
+    "level": "easy"
+}
+
+
+### Mettre à jour une ressource
+PUT {{baseUrl}}/texts/1
+Content-Type: application/json
+
+{
+    "content": "This is an updated text",
+    "level": "medium"
+}
+
+
+### Supprimer une ressource
+DELETE {{baseUrl}}/texts/2
+
+
+######### ERROR OPERATION  ###########
+
+### Lire une ressource qui n'existe pas
+GET {{baseUrl}}/texts/100
+
+
+### Créer une ressource sans une propriété
+POST {{baseUrl}}/texts
+Content-Type: application/json
+
+{
+    "level": "easy"
+}
+
+
+### Créer une ressource sans info pour une propriété
+POST {{baseUrl}}/texts
+Content-Type: application/json
+
+{
+    "content": "",
+    "level": "easy"
+}
+
+
+### Mettre à jour une ressource qui n'existe pas
+PUT {{baseUrl}}/texts/200
+Content-Type: application/json
+
+{
+    "content": "This is an updated text",
+    "level": "medium"
+}
+
+
+### Mettre à jour une ressource sans fournir d'info pour une propriété
+PUT {{baseUrl}}/texts/1
+Content-Type: application/json
+
+{
+    "content": "",
+    "level": "medium"
+}
