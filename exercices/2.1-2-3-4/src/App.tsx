@@ -1,11 +1,7 @@
-
-
-
 interface Movie {
   title: string;
   director: string;
 }
-
 
 interface PageTitleProps {
   title: string;
@@ -36,9 +32,6 @@ const Cinema = ({ name, movie1, movie2 }: CinemaProps) => {
     </div>
   );
 };
-
-
-
 
 const App = () => {
   const pageTitle = "Informations sur les films dans les cinémas";
